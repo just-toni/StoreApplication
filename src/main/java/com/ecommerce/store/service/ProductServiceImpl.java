@@ -8,18 +8,18 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
 
     @Autowired
     ProductRepository productRepository;
 
     @Override
-    public Product save(Product product){
+    public Product save(Product product) {
         return productRepository.save(product);
     }
 
     @Override
-    public List<Product> findAll(){
+    public List<Product> findAll() {
         return productRepository.findAll();
     }
 
