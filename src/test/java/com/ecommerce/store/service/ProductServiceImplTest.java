@@ -25,7 +25,7 @@ class ProductServiceImplTest {
     }
 
     @Test
-    void saveProductMockTest(){
+    void saveProductMockTest() {
         Product product = new Product();
         when(productServiceImpl.save(product)).thenReturn(product);
         productServiceImpl.save(product);

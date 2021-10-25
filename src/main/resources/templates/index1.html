@@ -69,7 +69,7 @@
 
 <div id="page">
     <!-- Nav -->
-    <nav th:insert="/fragments :: nav">
+    <nav th:insert="fragments :: nav">
     </nav>
     <!--Slider start-->
     <aside id="fh5co-hero" class="js-fullheight">
@@ -160,7 +160,7 @@
                         Odit ab aliquam dolor eius.</p>
                 </div>
             </div>
-            <div class="row" th:each="product : ${products}">
+            <div class="row" >
                 <div class="col-md-4 text-center animate-box">
                     <div class="product">
                         <div class="product-grid" th:style="'background-image:url('+${product.getImageUrl()[0]}+');'">
@@ -324,7 +324,7 @@
     </div>
 
     <!--footer-->
-    <footer th:insert="/fragments::footer">
+    <footer th:insert="fragments::footer">
     </footer>
 </div>
 

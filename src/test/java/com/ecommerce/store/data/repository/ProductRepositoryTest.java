@@ -29,7 +29,7 @@ class ProductRepositoryTest {
     }
 
     @Test
-    public void createProductTest(){
+    public void createProductTest() {
         Product product = new Product();
         product.setName("Luxury Sofa");
         product.setPrice(400.00);
@@ -47,14 +47,14 @@ class ProductRepositoryTest {
 
     @Test
     @Transactional
-    public void productListIsReturnedTest(){
+    public void productListIsReturnedTest() {
         List<Product> products = productRepositoryImpl.findAll();
         assertThat(products).hasSize(4);
         log.info("Products returned from database -> {}", products);
     }
 
     @Test
-    public void findExistingProductById(){
+    public void findExistingProductById() {
         Product existingProduct =
                 productRepositoryImpl.findById(2L).orElse(null);
         assertThat(existingProduct).isNotNull();
@@ -62,7 +62,7 @@ class ProductRepositoryTest {
     }
 
     @Test
-    public void deleteExistingProductById(){
+    public void deleteExistingProductById() {
         assertThat(productRepositoryImpl.findById(3L).orElse(null)).isNotNull();
         productRepositoryImpl.deleteById(3L);
         assertThat(productRepositoryImpl.findById(3L).orElse(null)).isNull();

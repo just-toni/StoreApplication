@@ -10,11 +10,11 @@ public enum Currency {
 
     private String name;
 
-    Currency(String currency){
+    Currency(String currency) {
         this.name = currency;
     }
 
-    private String getName(){
+    private String getName() {
         return this.name;
     }
 }
