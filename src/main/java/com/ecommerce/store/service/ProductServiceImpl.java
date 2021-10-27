@@ -1,7 +1,10 @@
 package com.ecommerce.store.service;
 
+import com.ecommerce.store.data.ProductDto;
 import com.ecommerce.store.data.model.Product;
 import com.ecommerce.store.data.repository.ProductRepository;
+import com.ecommerce.store.mapper.ProductMapper;
+import com.ecommerce.store.web.exceptions.ProductDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    ProductMapper productMapper;
 
     @Override
     public Product save(Product product) {
@@ -35,31 +41,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void updateProduct(Product product, Long productId){
-//        Optional<Product> productOptional = productRepository.findById(productId);
-//        if(productOptional.isPresent()){
-//            product.setName(product.getName());
-//            product.setPrice(product.getPrice());
-//            product.setDetails(product.getDetails());
-//            product.setCurrency(product.getCurrency());
-//            product.setImageUrl(product.getImageUrl());
-//            productRepository.save(product);
-        product = findById(productId);
-        if(product.getName() == null){
-            product.setName(product.getName());
+    public Product update(Long productId, ProductDto productDto) throws ProductDoesNotExistException {
+        if(productDto == null){
+            throw new NullPointerException("Product Dto can not be null");
         }
-        if(product.getPrice() == null){
-            product.setPrice(product.getPrice());
+        Product product = new Product();
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+        if(optionalProduct.isPresent()){
+            productMapper.mapDtoToProduct(productDto, product);
+            return productRepository.save(product);
         }
-        if (product.getCurrency() == null) {
-            product.setCurrency(product.getCurrency());
+        else {
+            throw new ProductDoesNotExistException("Product with id " + productId + " doesn't exist");
         }
-        if(product.getDetails() == null){
-            product.setDetails(product.getDetails());
-        }
-        if(product.getImageUrl() == null){
-            product.setImageUrl(product.getImageUrl());
-        }
-        productRepository.save(product);
     }
+
 }

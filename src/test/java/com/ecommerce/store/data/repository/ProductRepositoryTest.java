@@ -12,10 +12,8 @@ import org.springframework.test.context.jdbc.Sql;
 import javax.transaction.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Slf4j
@@ -67,21 +65,5 @@ class ProductRepositoryTest {
         assertThat(productRepositoryImpl.findById(3L).orElse(null)).isNotNull();
         productRepositoryImpl.deleteById(3L);
         assertThat(productRepositoryImpl.findById(3L).orElse(null)).isNull();
-    }
-
-    @Test
-    public void updateProduct(){
-        Optional<Product> productOptional = productRepositoryImpl.findById(10L);
-        if(productOptional.isPresent()){
-            Product product = productOptional.get();
-            product.setName("Black Sparkling Rose Matte Wine Set");
-//            product.setPrice(product.getPrice());
-//            product.setDetails(product.getDetails());
-//            product.setCurrency(product.getCurrency());
-//            product.setImageUrl(product.getImageUrl());
-            productRepositoryImpl.save(product);
-            assertEquals("Black Sparkling Rose Matte Wine Set", product.getName());
-            assertThat("Black Sparkling Rose Matte Wine Set").isEqualTo(product.getName());
-        }
     }
 }
