@@ -1,7 +1,9 @@
-package com.ecommerce.store.web;
+package com.ecommerce.store.web.controller;
 
+import com.ecommerce.store.data.ProductDto;
 import com.ecommerce.store.data.model.Product;
 import com.ecommerce.store.service.ProductService;
+import com.ecommerce.store.web.exceptions.ProductDoesNotExistException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +26,12 @@ public class ProductController {
     }
 
     @GetMapping("/findAllProducts/")
-    public List<Product> save() {
+    public List<Product> findAll() {
         return productServiceImpl.findAll();
     }
 
     @PostMapping("/add/")
-    public Product save(@RequestBody Product product) {
+    public Product add(@RequestBody Product product) {
         log.info("Product request --> {}", product);
         return productServiceImpl.save(product);
     }
@@ -41,15 +43,22 @@ public class ProductController {
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<?> findProductById(@PathVariable Long id){
+    public ResponseEntity<?> findProductById(@PathVariable Long id) {
         productServiceImpl.findById(id);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
 
-    @PatchMapping("/update/{id}")
-    public ResponseEntity<?> update(@RequestBody Product product, @PathVariable Long id){
-        log.info("Product request --> {}", product);
-        productServiceImpl.updateProduct(product, product.getId());
-        return ResponseEntity.ok("Product updated successfully");
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updateProduct(@PathVariable Long id, @RequestBody ProductDto productDto) {
+        log.info("Request id --> {}", id);
+        log.info("Product dto details --> {}", productDto);
+        Product product = null;
+        try {
+            product = productServiceImpl.update(id, productDto);
+
+        } catch (ProductDoesNotExistException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+        return ResponseEntity.ok().body(product);
     }
 }
