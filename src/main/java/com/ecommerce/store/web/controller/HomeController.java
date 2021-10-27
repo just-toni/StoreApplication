@@ -1,4 +1,4 @@
-package com.ecommerce.store.web;
+package com.ecommerce.store.web.controller;
 
 import com.ecommerce.store.data.model.Product;
 import com.ecommerce.store.service.ProductService;
